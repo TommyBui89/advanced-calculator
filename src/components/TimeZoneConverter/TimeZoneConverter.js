@@ -76,7 +76,7 @@ const TimeZoneConverter = () => {
 
     useEffect(() => {
         updateCurrentTimes();
-        const interval = setInterval(updateCurrentTimes, 60000); // Update every minute
+        const interval = setInterval(updateCurrentTimes, 60000);
         return () => clearInterval(interval);
     }, []);
 

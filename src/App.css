@@ -15,7 +15,7 @@ body {
 }
 
 .app.dark {
-  background-color: #333;
+  background-color: rgba(30, 30, 30, 0.9);
   color: #fff;
 }
 
@@ -30,6 +30,12 @@ body {
 .side-menu.collapsed {
   width: 60px;
   padding: 20px 10px;
+}
+
+@media (max-width: 768px) {
+  .side-menu.collapsed {
+    padding: 20px 2px;
+  }
 }
 
 .side-menu h2 {
@@ -163,7 +169,6 @@ body {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background-color: rgba(30, 30, 30, 0.9);
 }
 
 @media (max-width: 768px) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalculator, faExchangeAlt, faThermometerHalf, faDollarSign, faClock, faRuler, faGraduationCap, faTint } from '@fortawesome/free-solid-svg-icons';
+import { faCalculator, faExchangeAlt, faThermometerHalf, faDollarSign, faClock, faRuler, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 import './Dashboard.css';
 
 const calculators = [
