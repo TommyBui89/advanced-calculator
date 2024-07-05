@@ -1,0 +1,250 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.converter-container {
+    width: 100%;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    text-align: center;
+    color: #000;
+}
+
+body.dark .converter-container {
+    background: rgba(30, 30, 30, 0.9);
+    color: #fff;
+}
+
+.converter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 300px;
+}
+
+.input-container label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: inherit;
+}
+
+.input-container select {
+    width: 100%;
+    height: 40px;
+    font-size: 1.2em;
+    padding: 5px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
+}
+
+.app.dark .input-container select {
+    background: rgba(70, 70, 70, 0.8);
+    color: #fff;
+    border: 1px solid #555;
+}
+
+.switch-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.2em;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app.dark .switch-button {
+    background-color: #333;
+}
+
+.switch-button:hover {
+    background-color: #0056b3;
+}
+
+.app.dark .switch-button:hover {
+    background-color: #0056b3;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.convert-button,
+.clear-button {
+    width: 150px;
+    height: 40px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.convert-button {
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.convert-button:hover {
+    background-color: #0056b3;
+}
+
+.clear-button {
+    background-color: #dc3545;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.clear-button:hover {
+    background-color: #c82333;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.live-rates-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .live-rates-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-container, 
+    .live-rates-header {
+        width: 100%;
+    }
+}
+
+.search-container,
+.live-rates-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 50%;
+}
+
+.live-rates-header {
+    justify-content: flex-start;
+}
+
+.search-container label,
+.live-rates-header label {
+    font-weight: bold;
+}
+
+.live-rates-header select {
+    width: 70%;
+    height: 40px;
+    font-size: 1.2em;
+    padding: 5px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
+}
+
+.app.dark .live-rates-header select {
+    background: rgba(70, 70, 70, 0.8);
+    color: #fff;
+    border: 1px solid #555;
+}
+
+.search-container label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.search-container input {
+    width: 100%;
+    height: 40px;
+    font-size: 1.2em;
+    padding: 5px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
+}
+
+.rates-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.rates-table th,
+.rates-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.rates-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: black;
+}
+
+body.dark .rates-table th {
+    background-color: #444;
+    color: #fff;
+}
+
+.seperator {
+    margin-top: 20px;
+    border-bottom: 1px solid black;
+}
+
+.app.dark .seperator {
+    border-bottom: 1px solid white;
+}

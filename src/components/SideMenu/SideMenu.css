@@ -1,57 +1,30 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.app {
-  display: flex;
-  height: 100vh;
-}
-
-.app.light {
-  background-color: #fff;
-  color: #000;
-}
-
-.app.dark {
-  background-color: #333;
-  color: #fff;
-}
-
 .side-menu {
-  width: 180px;
-  padding: 20px;
+  width: 80px;
+  padding: 20px 10px;
   background-color: #f4f4f4;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   transition: width 0.3s;
 }
 
-.side-menu.collapsed {
-  width: 60px;
-  padding: 20px 10px;
+.side-menu.expanded {
+  width: 190px;
 }
 
 .side-menu h2 {
-  margin-top: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.side-menu.collapsed h2 {
   display: none;
 }
 
 .side-menu ul {
   list-style: none;
   padding: 0;
+  flex-grow: 1;
 }
 
 .side-menu ul li {
   margin: 10px 0;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .side-menu ul li a {
@@ -63,6 +36,15 @@ body {
   white-space: nowrap;
 }
 
+.side-menu ul li a svg {
+  font-size: 1.5em;
+  padding: 10px 0;
+}
+
+.side-menu.collapsed ul li a {
+  justify-content: center;
+}
+
 .side-menu.collapsed ul li a span {
   display: none;
 }
@@ -72,6 +54,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.side-menu.collapsed .theme-toggle-container {
+  flex-direction: column;
+  align-items: center;
 }
 
 .theme-toggle-checkbox {
@@ -159,36 +146,75 @@ body {
   color: #fff;
 }
 
-.content {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-}
-
 @media (max-width: 768px) {
-  .content {
-    padding: 0px;
+  .side-menu {
+      width: 80px;
+      padding: 20px 10px;
+  }
+
+  .side-menu h2 {
+      display: none;
+  }
+
+  .theme-toggle-text {
+      display: none;
   }
 }
 
-.collapse-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
+.content {
+  flex: 1;
+  padding: 0px;
+  overflow-y: auto;
 }
 
-.collapse-button:hover {
-  background-color: #0056b3;
+.app.light {
+  background-color: #fff;
+  color: #000;
+}
+
+.app.dark {
+  background-color: #333;
+  color: #fff;
+}
+
+.app.dark .side-menu {
+  background-color: #444;
+}
+
+.app.dark .side-menu ul li a {
+  color: #fff;
+}
+
+.menu-link {
+  color: #000;
+  text-decoration: none;
+}
+
+.app.dark .menu-link {
+  color: #fff;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  transition: color 0.3s;
+}
+
+.app.dark .menu-toggle {
+  color: #fff;
 }
 
 @media (max-width: 768px) {
-  .collapse-button {
-    display: block;
+  .side-menu {
+      width: 80px;
+  }
+
+  .theme-toggle-container {
+      flex-direction: column;
+      align-items: center;
   }
 }
