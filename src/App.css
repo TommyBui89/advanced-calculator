@@ -163,6 +163,7 @@ body {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
+  background-color: rgba(30, 30, 30, 0.9);
 }
 
 @media (max-width: 768px) {

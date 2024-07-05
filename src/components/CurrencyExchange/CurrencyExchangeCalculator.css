@@ -42,8 +42,8 @@ body.dark .converter-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 100%;
-    max-width: 300px;
+    gap: 5px;
+    width: 40%;
 }
 
 .input-container label {
@@ -52,7 +52,24 @@ body.dark .converter-container {
     color: inherit;
 }
 
-.input-container select {
+@media (max-width: 768px) {
+    .input-container {
+        width: 100%;
+        align-items: center;
+    }
+
+        .live-rates-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-container, 
+    .live-rates-header {
+        width: 100%;
+    }
+}
+
+/* .input-container select {
     width: 100%;
     height: 40px;
     font-size: 1.2em;
@@ -63,7 +80,7 @@ body.dark .converter-container {
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.8);
     color: #000;
-}
+} */
 
 .app.dark .input-container select {
     background: rgba(70, 70, 70, 0.8);
@@ -154,11 +171,6 @@ body.dark .converter-container {
         flex-direction: column;
         gap: 10px;
     }
-
-    .search-container, 
-    .live-rates-header {
-        width: 100%;
-    }
 }
 
 .search-container,
@@ -168,6 +180,17 @@ body.dark .converter-container {
     align-items: center;
     gap: 10px;
     width: 50%;
+}
+
+@media (max-width: 768px) {
+    .search-container, 
+    .live-rates-header {
+        width: 100%;
+    }
+
+    .live-rates-header label{
+        text-align: left;
+    }
 }
 
 .live-rates-header {

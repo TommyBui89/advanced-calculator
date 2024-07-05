@@ -12,7 +12,6 @@ const calculators = [
     { path: '/timezone', icon: faClock, name: 'Time Zone Converter' },
     { path: '/unit', icon: faRuler, name: 'Unit Converter' },
     { path: '/grade', icon: faGraduationCap, name: 'Grade Calculator' },
-    { path: '/hydration', icon: faTint, name: 'Hydration Calculator' },
 ];
 
 const Dashboard = () => {

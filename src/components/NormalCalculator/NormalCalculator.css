@@ -53,8 +53,8 @@
 
 .display input {
     width: 100%;
-    height: 60px; /* Increased height */
-    font-size: 1.5em; /* Increased font size */
+    height: 60px;
+    font-size: 1.5em;
     text-align: right;
     padding-right: 10px;
     box-sizing: border-box;
@@ -64,8 +64,8 @@
 
 @media (max-width: 768px) {
     .display input {
-        height: 40px; /* Decreased height for mobile */
-        font-size: 1.2em; /* Decreased font size for mobile */
+        height: 40px;
+        font-size: 1.2em;
     }
 }
 
@@ -77,33 +77,33 @@
 
 .result {
     text-align: right;
-    font-size: 1.5em; /* Increased font size */
+    font-size: 1.5em;
     margin-top: 5px;
 }
 
 @media (max-width: 768px) {
     .result {
-        font-size: 1.2em; /* Decreased font size for mobile */
+        font-size: 1.2em;
     }
 }
 
 .buttons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Adjusted for more buttons */
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
     margin-top: 10px;
 }
 
 @media (max-width: 768px) {
     .buttons {
-        grid-gap: 5px; /* Decreased gap for mobile */
+        grid-gap: 5px;
     }
 }
 
 button {
     width: 100%;
-    height: 60px; /* Increased height */
-    font-size: 1.5em; /* Increased font size */
+    height: 60px;
+    font-size: 1.5em;
     border: none;
     background-color: white;
     cursor: pointer;
@@ -114,8 +114,8 @@ button {
 
 @media (max-width: 768px) {
     button {
-        height: 40px; /* Decreased height for mobile */
-        font-size: 1.2em; /* Decreased font size for mobile */
+        height: 40px;
+        font-size: 1.2em;
     }
 }
 
@@ -178,7 +178,7 @@ button:active {
 
 @media (max-width: 768px) {
     .history h2 {
-        font-size: 1.5rem; /* Decreased font size for mobile */
+        font-size: 1.5rem;
     }
 }
 
@@ -188,7 +188,7 @@ button:active {
 
 @media (max-width: 768px) {
     .history ul {
-        padding: 0 10px; /* Decreased padding for mobile */
+        padding: 0 10px;
     }
 }
 
@@ -199,7 +199,7 @@ button:active {
 
 @media (max-width: 768px) {
     .history ul li {
-        font-size: 1.2rem; /* Decreased font size for mobile */
+        font-size: 1.2rem;
     }
 }
 

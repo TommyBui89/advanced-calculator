@@ -54,19 +54,19 @@
     font-size: 1em;
 }
 
-body.light .dashboard {
+.app.light .dashboard {
     color: #000;
 }
 
-body.light .search-bar {
+.app.light .search-bar {
     color: #000;
 }
 
-body.light .calculator-card {
+.app.light .calculator-card {
     background: #f4f4f4;
     color: #000;
 }
 
-body.light .calculator-card:hover {
+.app.light .calculator-card:hover {
     background: #ddd;
 }
