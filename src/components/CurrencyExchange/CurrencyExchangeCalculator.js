@@ -205,9 +205,15 @@ const CurrencyExchangeCalculator = () => {
         }
     }, [liveBaseCurrency]);
 
+    useEffect(() => {
+        handleConvert();
+    }, [amount, exchangeRate]);
+
     const handleConvert = () => {
         if (amount && exchangeRate) {
             setConvertedAmount((amount * exchangeRate).toFixed(2));
+        } else {
+            setConvertedAmount('');
         }
     };
 
@@ -217,10 +223,13 @@ const CurrencyExchangeCalculator = () => {
     };
 
     const switchCurrencies = () => {
-        const temp = baseCurrency;
+        const tempCurrency = baseCurrency;
         setBaseCurrency(targetCurrency);
-        setTargetCurrency(temp);
-        setConvertedAmount('');
+        setTargetCurrency(tempCurrency);
+
+        const tempAmount = amount;
+        setAmount(convertedAmount);
+        setConvertedAmount(tempAmount);
     };
 
     const handleSearch = (e) => {
@@ -228,7 +237,13 @@ const CurrencyExchangeCalculator = () => {
     };
 
     const filteredRates = Object.keys(liveRates)
-        .filter(currency => currency.toLowerCase().includes(searchQuery.toLowerCase()))
+        .filter(currency => {
+            const currencyName = currencyOptions.find(option => option.code === currency)?.name.toLowerCase() || '';
+            return (
+                currency.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                currencyName.includes(searchQuery.toLowerCase())
+            );
+        })
         .reduce((obj, key) => {
             obj[key] = liveRates[key];
             return obj;
@@ -236,7 +251,6 @@ const CurrencyExchangeCalculator = () => {
 
     return (
         <div className="converter-container">
-            <h2>Currency Exchange Calculator</h2>
             <div className="converter">
                 <div className="input-group">
                     <div className="input-container">
@@ -292,12 +306,11 @@ const CurrencyExchangeCalculator = () => {
                     <button className="clear-button" onClick={handleClear}>Clear</button>
                 </div>
             </div>
-            
 
-            <div className='seperator'></div>
+            <div className='separator'></div>
 
             <div>
-                <h2 style={{ margin: '20px 0 20px 0' }}>Live Exchange Rates</h2>
+                <h2 style={{ margin: '20px 0' }}>Live Exchange Rates</h2>
                 <div className="live-rates">
                     <div className="live-rates-group">
                         <div className="live-rates-header">
@@ -319,28 +332,30 @@ const CurrencyExchangeCalculator = () => {
                                 type="text"
                                 value={searchQuery}
                                 onChange={handleSearch}
-                                placeholder="Search for currency"
+                                placeholder="Search by currency code or name"
                             />
                         </div>
                     </div>
-                    <table className="rates-table">
-                        <thead>
-                            <tr>
-                                <th>Currency</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Object.keys(filteredRates).map(currency => (
-                                <tr key={currency}>
-                                    <td>
-                                        {currencyOptions.find(option => option.code === currency)?.flag || ''} {currencyOptions.find(option => option.code === currency)?.name || currency}
-                                    </td>
-                                    <td>{filteredRates[currency].toFixed(4)}</td>
+                    <div className="table-container">
+                        <table className="rates-table">
+                            <thead>
+                                <tr>
+                                    <th>Currency</th>
+                                    <th>Amount</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {Object.keys(filteredRates).map(currency => (
+                                    <tr key={currency}>
+                                        <td>
+                                            {currencyOptions.find(option => option.code === currency)?.flag || ''} {currencyOptions.find(option => option.code === currency)?.name || currency}
+                                        </td>
+                                        <td>{filteredRates[currency].toFixed(4)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

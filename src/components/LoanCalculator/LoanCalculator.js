@@ -141,7 +141,6 @@ const LoanCalculator = ({ theme }) => {
 
     return (
         <div className={`${styles.loanCalculatorContainer} ${theme === 'dark' ? styles.dark : ''}`}>
-            <h2>Loan Calculator</h2>
             <div className={styles.calculator}>
                 <div className={styles.topInputGroup}>
                     <div className={styles.inputGroup}>

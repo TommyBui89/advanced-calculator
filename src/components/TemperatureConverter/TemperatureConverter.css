@@ -2,11 +2,10 @@
     max-width: fit-content;
     margin: 0 auto;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.7); /* Light mode background */
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
-    border-radius: 10px;
     text-align: center;
-    color: #000; /* Text color for light mode */
+    color: #000;
 }
 
 .converter-container h2 {
@@ -25,7 +24,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px; /* Adjusted for spacing */
+    gap: 20px;
     width: 100%;
 }
 
@@ -52,8 +51,8 @@
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background: rgba(255, 255, 255, 0.8); /* Ensure visibility in light mode */
-    color: #000; /* Text color for light mode */
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
 }
 
 .switch-container {
@@ -67,7 +66,7 @@
     color: #fff;
     cursor: pointer;
     font-size: 1.5em;
-    margin-top: 35px; /* Align with input box */
+    margin-top: 35px;
 }
 
 .switch-button {
@@ -104,6 +103,21 @@
     transition: background-color 0.3s;
 }
 
+.location-button {
+    background-color: #28a745;
+    color: #fff;
+    width: 310px;
+    height: 40px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.location-button:hover {
+    background-color: #218838;
+}
+
 @media (max-width: 768px) {
     .clear-button {
         width: 100%;
@@ -114,20 +128,43 @@
     background-color: #c82333;
 }
 
+.weather-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.weather-item {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #000;
+    cursor: pointer;
+}
+
+body.dark .weather-item {
+    background: rgba(30, 30, 30, 0.9);
+    color: #fff;
+}
+
 /* Dark mode styles */
 .app.dark .converter-container {
-    background: rgba(30, 30, 30, 0.9);
-    color: #fff; /* Text color for dark mode */
+    background: transparent;
+    color: #fff; 
 }
 
 .app.dark .converter-container input {
-    background: rgba(70, 70, 70, 0.8);
+    background: #444;
     color: #fff;
     border: 1px solid #555;
 }
 
 .app.dark .convert-button {
-    background-color: #333;
     color: #fff;
 }
 
@@ -136,10 +173,13 @@
 }
 
 .app.dark .clear-button {
-    background-color: #333;
     color: #fff;
 }
 
 .app.dark .clear-button:hover {
     background-color: #c82333;
+}
+
+.app.dark .location-button:hover {
+    background-color: #218838;
 }

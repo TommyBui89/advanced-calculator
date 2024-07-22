@@ -1,11 +1,9 @@
-
 .converter-container {
-    max-width: fit-content;
+    max-width: 100%;
     margin: 0 auto;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
-    border-radius: 10px;
     text-align: center;
     color: #000;
 }
@@ -104,7 +102,8 @@ body.dark .input-container input[type="time"]::-webkit-calendar-picker-indicator
     gap: 10px;
 }
 
-.convert-button {
+.convert-button,
+.format-button {
     width: 150px;
     height: 40px;
     font-size: 1.2em;
@@ -116,7 +115,8 @@ body.dark .input-container input[type="time"]::-webkit-calendar-picker-indicator
     transition: background-color 0.3s;
 }
 
-.convert-button:hover {
+.convert-button:hover,
+.format-button:hover {
     background-color: #0056b3;
 }
 
@@ -130,12 +130,14 @@ body.dark .switch-container {
     background-color: #555;
 }
 
-body.dark .convert-button {
+body.dark .convert-button,
+body.dark .format-button {
     background-color: #007bff;
     color: #fff;
 }
 
-body.dark .convert-button:hover {
+body.dark .convert-button:hover,
+body.dark .format-button:hover {
     background-color: #0056b3;
 }
 
@@ -154,11 +156,42 @@ body.dark .input-container input[type="time"]::-webkit-datetime-edit-minute-fiel
     color: #fff;
 }
 
+.search-container {
+    margin-top: 20px;
+    margin: 0 auto;
+}
+
+.search-container label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.search-container input {
+    width: 100%;
+    max-width: 300px;
+    height: 40px;
+    font-size: 1.2em;
+    padding: 5px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
+}
+
+body.dark .search-container input {
+    background: rgba(70, 70, 70, 0.8);
+    color: #fff;
+    border: 1px solid #555;
+}
+
 .current-times {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+    margin-top: 20px;
 }
 
 .time-zone {

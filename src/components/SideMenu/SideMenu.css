@@ -1,17 +1,29 @@
 .side-menu {
-  width: 80px;
+  width: 60px;
   padding: 20px 10px;
-  background-color: #f4f4f4;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #007bff;
   transition: width 0.3s;
 }
 
-.side-menu.expanded {
-  width: 190px;
+.side-menu.visible {
+  width: 60px;
+}
+
+.side-menu.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .side-menu.collapsed {
+    padding: 20px 2px;
+  }
 }
 
 .side-menu h2 {
-  display: none;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .side-menu ul {
@@ -29,7 +41,7 @@
 
 .side-menu ul li a {
   text-decoration: none;
-  color: #333;
+  color: white;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -45,15 +57,11 @@
   justify-content: center;
 }
 
-.side-menu.collapsed ul li a span {
-  display: none;
-}
-
 .theme-toggle-container {
   margin-top: 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .side-menu.collapsed .theme-toggle-container {
@@ -61,76 +69,44 @@
   align-items: center;
 }
 
-.theme-toggle-checkbox {
-  height: 0;
-  width: 0;
-  visibility: hidden;
-}
-
-.theme-toggle-label {
-  cursor: pointer;
-  text-indent: -9999px;
-  width: 50px;
-  height: 25px;
-  background: grey;
-  display: block;
-  border-radius: 100px;
-  position: relative;
-}
-
-.theme-toggle-label .theme-toggle-inner {
+.react-toggle {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 5px;
 }
 
-.theme-toggle-label .icon {
-  font-size: 14px;
-  transition: all 0.3s ease;
+.react-toggle-track {
+  background: white !important;
+  border-radius: 30px;
 }
 
-.theme-toggle-label .sun-icon {
-  color: #ffdd00;
-  visibility: visible;
+.react-toggle-track-check,
+.react-toggle-track-x {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
-.theme-toggle-label .moon-icon {
-  color: #fff;
-  visibility: hidden;
+.react-toggle--checked .react-toggle-track {
+  background: #007bff !important;
 }
 
-.theme-toggle-checkbox:checked + .theme-toggle-label .sun-icon {
-  visibility: hidden;
+.react-toggle--checked .react-toggle-thumb {
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
 
-.theme-toggle-checkbox:checked + .theme-toggle-label .moon-icon {
-  visibility: visible;
+.react-toggle-thumb {
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 50%;
 }
 
-.theme-toggle-label:after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 21px;
-  height: 21px;
-  background: #fff;
-  border-radius: 90px;
-  transition: 0.3s;
-}
-
-.theme-toggle-checkbox:checked + .theme-toggle-label {
-  background: #333;
-}
-
-.theme-toggle-checkbox:checked + .theme-toggle-label:after {
-  left: calc(100% - 2px);
-  transform: translateX(-100%);
-}
-
-.theme-toggle-label:active:after {
-  width: 30px;
+.toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .theme-toggle-text {
@@ -139,7 +115,7 @@
 }
 
 .app.light .theme-toggle-text {
-  color: #000;
+  color: #fff;
 }
 
 .app.dark .theme-toggle-text {
@@ -152,29 +128,9 @@
       padding: 20px 10px;
   }
 
-  .side-menu h2 {
-      display: none;
-  }
-
   .theme-toggle-text {
       display: none;
   }
-}
-
-.content {
-  flex: 1;
-  padding: 0px;
-  overflow-y: auto;
-}
-
-.app.light {
-  background-color: #fff;
-  color: #000;
-}
-
-.app.dark {
-  background-color: #333;
-  color: #fff;
 }
 
 .app.dark .side-menu {
@@ -186,34 +142,11 @@
 }
 
 .menu-link {
-  color: #000;
+  color: white;
   text-decoration: none;
 }
 
 .app.dark .menu-link {
-  color: #fff;
-}
-
-.menu-toggle {
-  width: 100%;
-  background: none;
-  border: none;
-  color: #333;
-  cursor: pointer;
-  font-size: 1.5em;
-  margin-bottom: 20px;
-  transition: color 0.3s;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-}
-
-@media (max-width: 768px) {
-  .menu-toggle {
-    height: 40px;
-  }
-}
-
-.app.dark .menu-toggle {
   color: #fff;
 }
 
@@ -225,5 +158,27 @@
   .theme-toggle-container {
       flex-direction: column;
       align-items: center;
+  }
+}
+
+.collapse-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.collapse-button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .collapse-button {
+    display: block;
   }
 }

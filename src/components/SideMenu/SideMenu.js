@@ -1,47 +1,33 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalculator, faExchangeAlt, faThermometerHalf, faDollarSign, faHome, faClock, faRuler, faGraduationCap, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCalculator, faExchangeAlt, faThermometerHalf, faDollarSign, faHome, faClock, faRuler, faGraduationCap, faBars, faTimes, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import Toggle from 'react-toggle';
 import './SideMenu.css';
+import 'react-toggle/style.css';
 
-const SideMenu = ({ toggleTheme, theme }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
-
-    const toggleMenu = () => {
-        setIsExpanded(!isExpanded);
-    };
-
+const SideMenu = ({ toggleTheme, theme, isMenuVisible }) => {
     return (
-        <div className={`side-menu ${isExpanded ? '' : 'collapsed'}`}>
-            <button className="menu-toggle" onClick={toggleMenu}>
-                <FontAwesomeIcon icon={isExpanded ? faTimes : faBars} />
-            </button>
+        <div className={`side-menu ${isMenuVisible ? 'visible' : 'hidden'}`}>
             <ul>
-                <li><Link to="/" className="menu-link"><FontAwesomeIcon icon={faHome} /><span>Home</span></Link></li>
-                <li><Link to="/normal" className="menu-link"><FontAwesomeIcon icon={faCalculator} /><span>Normal Calculator</span></Link></li>
-                <li><Link to="/currency" className="menu-link"><FontAwesomeIcon icon={faExchangeAlt} /><span>Currency Exchange</span></Link></li>
-                <li><Link to="/temperature" className="menu-link"><FontAwesomeIcon icon={faThermometerHalf} /><span>Temperature Converter</span></Link></li>
-                <li><Link to="/loan" className="menu-link"><FontAwesomeIcon icon={faDollarSign} /><span>Loan Calculator</span></Link></li>
-                <li><Link to="/timezone" className="menu-link"><FontAwesomeIcon icon={faClock} /><span>Time Zone Converter</span></Link></li>
-                <li><Link to="/unit" className="menu-link"><FontAwesomeIcon icon={faRuler} /><span>Unit Converter</span></Link></li>
-                <li><Link to="/grade" className="menu-link"><FontAwesomeIcon icon={faGraduationCap} /><span>Grade Calculator</span></Link></li>
+                <li><NavLink exact to="/" className="menu-link" activeClassName="active"><FontAwesomeIcon icon={faHome} /></NavLink></li>
+                <li><NavLink to="/normal" className="menu-link" activeClassName="active"><FontAwesomeIcon icon={faCalculator} /></NavLink></li>
+                <li><NavLink to="/currency" className="menu-link" activeClassName="active"><FontAwesomeIcon icon={faExchangeAlt} /></NavLink></li>
+                <li><NavLink to="/temperature" className="menu-link" activeClassName="active"><FontAwesomeIcon icon={faThermometerHalf} /></NavLink></li>
+                <li><NavLink to="/loan" className="menu-link" activeClassName="active"><FontAwesomeIcon icon={faDollarSign} /></NavLink></li>
+                <li><NavLink to="/timezone" className="menu-link" activeClassName="active"><FontAwesomeIcon icon={faClock} /></NavLink></li>
+                <li><NavLink to="/unit" className="menu-link" activeClassName="active"><FontAwesomeIcon icon={faRuler} /></NavLink></li>
+                <li><NavLink to="/grade" className="menu-link" activeClassName="active"><FontAwesomeIcon icon={faGraduationCap} /></NavLink></li>
             </ul>
             <div className="theme-toggle-container">
-                <label className="theme-toggle-label">
-                    <input
-                        type="checkbox"
-                        id="theme-toggle"
-                        className="theme-toggle-checkbox"
-                        onChange={toggleTheme}
-                        checked={theme === 'dark'}
-                    />
-                    <span className="theme-toggle-inner">
-                        <span className="icon sun-icon">☀️</span>
-                        <span className="theme-toggle-switch" />
-                        <span className="icon moon-icon">🌙</span>
-                    </span>
-                </label>
-                {isExpanded && <span className="theme-toggle-text">{theme === 'dark' ? 'Dark Mode' : 'Light Mode'}</span>}
+                <Toggle
+                    defaultChecked={theme === 'dark'}
+                    icons={{
+                        checked: <FontAwesomeIcon icon={faMoon} className="toggle-icon" />,
+                        unchecked: <FontAwesomeIcon icon={faSun} className="toggle-icon" />,
+                    }}
+                    onChange={toggleTheme}
+                />
             </div>
         </div>
     );

@@ -71,7 +71,7 @@ const NormalCalculator = () => {
                     <h2>History</h2>
                     <button onClick={clearHistory}>Clear History</button>
                 </div>
-                <ul>
+                <ul className="history-list">
                     {history.map((item, index) => (
                         <li key={index}>
                             {item.expression} = {item.result}

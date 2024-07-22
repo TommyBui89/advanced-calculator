@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { DateTime } from 'luxon';
 import './TimeZoneConverter.css';
 
 const TimeZoneConverter = () => {
@@ -7,6 +8,8 @@ const TimeZoneConverter = () => {
     const [toTimeZone, setToTimeZone] = useState('UTC');
     const [convertedTime, setConvertedTime] = useState('');
     const [currentTimes, setCurrentTimes] = useState({});
+    const [searchQuery, setSearchQuery] = useState('');
+    const [use24HourFormat, setUse24HourFormat] = useState(true);
 
     const timeZones = [
         { value: 'UTC', label: 'UTC' },
@@ -58,31 +61,36 @@ const TimeZoneConverter = () => {
     ];
 
     const handleConvert = () => {
-        const fromDate = new Date(`1970-01-01T${time}:00Z`);
-        const fromOffset = new Date().toLocaleString('en-US', { timeZone: fromTimeZone }).split(', ')[1].slice(9);
-        const toOffset = new Date().toLocaleString('en-US', { timeZone: toTimeZone }).split(', ')[1].slice(9);
-
-        fromDate.setHours(fromDate.getHours() + parseInt(fromOffset) - parseInt(toOffset));
-        setConvertedTime(fromDate.toTimeString().slice(0, 5));
+        const [hours, minutes] = time.split(':');
+        const fromDateTime = DateTime.fromObject({ hour: parseInt(hours), minute: parseInt(minutes) }, { zone: fromTimeZone });
+        const toDateTime = fromDateTime.setZone(toTimeZone);
+        setConvertedTime(toDateTime.toFormat(use24HourFormat ? 'HH:mm' : 'hh:mm a'));
     };
 
     const updateCurrentTimes = () => {
         const newCurrentTimes = {};
         timeZones.forEach(zone => {
-            newCurrentTimes[zone.label] = new Date().toLocaleTimeString('en-US', { timeZone: zone.value });
+            newCurrentTimes[zone.label] = DateTime.now().setZone(zone.value).toFormat(use24HourFormat ? 'HH:mm:ss' : 'hh:mm:ss a');
         });
         setCurrentTimes(newCurrentTimes);
     };
 
     useEffect(() => {
         updateCurrentTimes();
-        const interval = setInterval(updateCurrentTimes, 60000);
+        const interval = setInterval(updateCurrentTimes, 1000);
         return () => clearInterval(interval);
-    }, []);
+    }, [use24HourFormat]);
+
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredTimeZones = timeZones.filter(zone =>
+        zone.label.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div className="converter-container">
-            <h2>Time Zone Converter</h2>
             <div className="converter">
                 <div className="input-group">
                     <div className="input-container">
@@ -107,7 +115,11 @@ const TimeZoneConverter = () => {
                             ))}
                         </select>
                     </div>
-                    <div className="switch-container" onClick={handleConvert}>
+                    <div className="switch-container" onClick={() => {
+                        const temp = fromTimeZone;
+                        setFromTimeZone(toTimeZone);
+                        setToTimeZone(temp);
+                    }}>
                         <span className="switch-button">⇆</span>
                     </div>
                     <div className="input-container">
@@ -134,13 +146,25 @@ const TimeZoneConverter = () => {
                 </div>
                 <div className="button-group">
                     <button onClick={handleConvert} className="convert-button">Convert</button>
+                    <button onClick={() => setUse24HourFormat(!use24HourFormat)} className="format-button">
+                        {use24HourFormat ? '24-hour' : '12-hour'}
+                    </button>
                 </div>
             </div>
             <h3>Current Times in Various Time Zones</h3>
+            <div className="search-container">
+                <label>Search:</label>
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    placeholder="Search for time zone"
+                />
+            </div>
             <div className="current-times">
-                {Object.entries(currentTimes).map(([zone, time]) => (
-                    <div key={zone} className="time-zone">
-                        <strong>{zone}</strong>: {time}
+                {filteredTimeZones.map(zone => (
+                    <div key={zone.value} className="time-zone">
+                        <strong>{zone.label}</strong>: {currentTimes[zone.label]}
                     </div>
                 ))}
             </div>

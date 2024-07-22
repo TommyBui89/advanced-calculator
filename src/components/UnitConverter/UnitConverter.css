@@ -4,21 +4,22 @@
     padding: 20px;
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
-    border-radius: 10px;
     text-align: center;
     color: #000;
 }
 
 .converter-container h2 {
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 .converter {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.converter h3 {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .input-group {
@@ -75,31 +76,6 @@
     transform: rotate(0deg);
 }
 
-.button-group {
-    display: flex;
-    gap: 10px;
-}
-
-.convert-button {
-    width: 150px;
-    height: 40px;
-    font-size: 1.2em;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    transition: background-color 0.3s;
-}
-
-.convert-button:hover {
-    background-color: #0056b3;
-}
-
-.result-container {
-    margin-top: 20px;
-}
-
 /* Dark mode styles */
 body.dark .converter-container {
     background: rgba(30, 30, 30, 0.9);
@@ -112,13 +88,8 @@ body.dark .converter-container select {
     color: #fff;
 }
 
-body.dark .convert-button {
-    background-color: #007bff;
-    color: #fff;
-}
-
-body.dark .convert-button:hover {
-    background-color: #0056b3;
+body.dark .switch-container {
+    background-color: #555;
 }
 
 /* Mobile view adjustments */
@@ -132,11 +103,6 @@ body.dark .convert-button:hover {
         gap: 10px;
     }
 
-    .button-group {
-        flex-direction: column;
-        width: 100%;
-    }
-
     .input-container {
         width: 100%;
         align-items: center;
@@ -146,11 +112,7 @@ body.dark .convert-button:hover {
         margin-top: 0;
     }
 
-    .convert-button {
-        width: 100%;
-    }
-
-    .switch-container {
+    .switch-button {
         margin: 0px;
     }
 }

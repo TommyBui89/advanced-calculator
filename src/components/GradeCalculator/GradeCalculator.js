@@ -9,6 +9,8 @@ const GradeCalculator = ({ theme }) => {
     const [grades, setGrades] = useState([{ name: '', score: '', weight: '' }]);
     const [finalGrade, setFinalGrade] = useState('');
     const [gradingSystem, setGradingSystem] = useState('percentage');
+    const [goalGrade, setGoalGrade] = useState('');
+    const [error, setError] = useState('');
 
     const calculateTotalWeight = () => {
         return grades.reduce((total, grade) => total + (parseFloat(grade.weight) || 0), 0);
@@ -19,7 +21,7 @@ const GradeCalculator = ({ theme }) => {
         if (totalWeight < 100) {
             setGrades([...grades, { name: '', score: '', weight: '' }]);
         } else {
-            alert('Total weight cannot exceed 100%.');
+            setError('Total weight cannot exceed 100%.');
         }
     };
 
@@ -27,6 +29,7 @@ const GradeCalculator = ({ theme }) => {
         const newGrades = [...grades];
         newGrades[index][field] = value;
         setGrades(newGrades);
+        setError('');
     };
 
     const handleDeleteGrade = (index) => {
@@ -50,7 +53,30 @@ const GradeCalculator = ({ theme }) => {
         if (totalWeight === 100) {
             setFinalGrade(convertGrade(weightedSum.toFixed(2)));
         } else {
-            alert('The total weight should be 100%. Please adjust the weights.');
+            setError('The total weight should be 100%. Please adjust the weights.');
+        }
+    };
+
+    const handleCalculateGoal = () => {
+        let totalWeight = 0;
+        let weightedSum = 0;
+
+        grades.forEach((grade) => {
+            const score = parseFloat(grade.score);
+            const weight = parseFloat(grade.weight);
+            if (!isNaN(score) && !isNaN(weight)) {
+                weightedSum += score * (weight / 100);
+                totalWeight += weight;
+            }
+        });
+
+        const remainingWeight = 100 - totalWeight;
+        const requiredScore = (parseFloat(goalGrade) - weightedSum) / (remainingWeight / 100);
+
+        if (totalWeight <= 100 && requiredScore <= 100) {
+            setError(`You need to score at least ${requiredScore.toFixed(2)}% in the remaining ${remainingWeight}% weight to achieve your goal.`);
+        } else {
+            setError('It is not possible to achieve the goal with the current grades and weights.');
         }
     };
 
@@ -82,15 +108,15 @@ const GradeCalculator = ({ theme }) => {
             {
                 label: 'Scores',
                 data: grades.map((grade) => parseFloat(grade.score) || 0),
-                backgroundColor: 'rgba(75,192,192,0.4)',
-                borderColor: 'rgba(75,192,192,1)',
+                backgroundColor: theme === 'dark' ? '#36A2EB' : 'rgba(75,192,192,0.4)',
+                borderColor: theme === 'dark' ? '#36A2EB' : 'rgba(75,192,192,1)',
                 borderWidth: 1,
             },
             {
                 label: 'Weights',
                 data: grades.map((grade) => parseFloat(grade.weight) || 0),
-                backgroundColor: 'rgba(255,99,132,0.4)',
-                borderColor: 'rgba(255,99,132,1)',
+                backgroundColor: theme === 'dark' ? '#FF6384' : 'rgba(255,99,132,0.4)',
+                borderColor: theme === 'dark' ? '#FF6384' : 'rgba(255,99,132,1)',
                 borderWidth: 1,
             },
         ],
@@ -105,8 +131,10 @@ const GradeCalculator = ({ theme }) => {
                 grid: {
                     color: theme === 'dark' ? '#444' : '#ccc',
                 },
-                label: {
-                    color: theme === 'dark' ? '#444' : '#ccc',
+                title: {
+                    display: true,
+                    text: 'Assessments',
+                    color: theme === 'dark' ? '#fff' : '#000',
                 },
             },
             y: {
@@ -118,8 +146,10 @@ const GradeCalculator = ({ theme }) => {
                 grid: {
                     color: theme === 'dark' ? '#444' : '#ccc',
                 },
-                label: {
-                    color: theme === 'dark' ? '#444' : '#ccc',
+                title: {
+                    display: true,
+                    text: 'Scores and Weights (%)',
+                    color: theme === 'dark' ? '#fff' : '#000',
                 },
             },
         },
@@ -134,7 +164,7 @@ const GradeCalculator = ({ theme }) => {
 
     return (
         <div className={`grade-calculator-container ${theme}`}>
-            <h2>Grade Calculator</h2>
+            {error && <div className="error">{error}</div>}
             <div className="grades-input">
                 {grades.map((grade, index) => (
                     <div key={index} className="grade-input-row">
@@ -177,6 +207,17 @@ const GradeCalculator = ({ theme }) => {
                         <option value="gpa">GPA</option>
                         <option value="letter">Letter Grade</option>
                     </select>
+                </div>
+                <div className="goal-container">
+                    <label htmlFor="goal-grade">Goal Grade: </label>
+                    <input
+                        type="number"
+                        id="goal-grade"
+                        value={goalGrade}
+                        onChange={(e) => setGoalGrade(e.target.value)}
+                        placeholder="Enter Goal Grade"
+                    />
+                    <button onClick={handleCalculateGoal} className="calculate-goal-button">Calculate Required Score</button>
                 </div>
                 <div className="calculate-grade-container">
                     <button onClick={handleCalculateGrade} className="calculate-grade-button">Calculate Final Grade</button>

@@ -19,155 +19,8 @@ body {
   color: #fff;
 }
 
-.side-menu {
-  width: 180px;
-  padding: 20px;
-  background-color: #f4f4f4;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  transition: width 0.3s;
-}
-
-.side-menu.collapsed {
-  width: 60px;
-  padding: 20px 10px;
-}
-
-@media (max-width: 768px) {
-  .side-menu.collapsed {
-    padding: 20px 2px;
-  }
-}
-
-.side-menu h2 {
-  margin-top: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.side-menu.collapsed h2 {
-  display: none;
-}
-
-.side-menu ul {
-  list-style: none;
-  padding: 0;
-}
-
-.side-menu ul li {
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
-}
-
-.side-menu ul li a {
-  text-decoration: none;
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  white-space: nowrap;
-}
-
-.side-menu.collapsed ul li a span {
-  display: none;
-}
-
-.theme-toggle-container {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.theme-toggle-checkbox {
-  height: 0;
-  width: 0;
-  visibility: hidden;
-}
-
-.theme-toggle-label {
-  cursor: pointer;
-  text-indent: -9999px;
-  width: 50px;
-  height: 25px;
-  background: grey;
-  display: block;
-  border-radius: 100px;
-  position: relative;
-}
-
-.theme-toggle-label .theme-toggle-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 5px;
-}
-
-.theme-toggle-label .icon {
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
-
-.theme-toggle-label .sun-icon {
-  color: #ffdd00;
-  visibility: visible;
-}
-
-.theme-toggle-label .moon-icon {
-  color: #fff;
-  visibility: hidden;
-}
-
-.theme-toggle-checkbox:checked + .theme-toggle-label .sun-icon {
-  visibility: hidden;
-}
-
-.theme-toggle-checkbox:checked + .theme-toggle-label .moon-icon {
-  visibility: visible;
-}
-
-.theme-toggle-label:after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 21px;
-  height: 21px;
-  background: #fff;
-  border-radius: 90px;
-  transition: 0.3s;
-}
-
-.theme-toggle-checkbox:checked + .theme-toggle-label {
-  background: #333;
-}
-
-.theme-toggle-checkbox:checked + .theme-toggle-label:after {
-  left: calc(100% - 2px);
-  transform: translateX(-100%);
-}
-
-.theme-toggle-label:active:after {
-  width: 30px;
-}
-
-.theme-toggle-text {
-  font-size: 0.9em;
-  margin-left: 10px;
-}
-
-.app.light .theme-toggle-text {
-  color: #000;
-}
-
-.app.dark .theme-toggle-text {
-  color: #fff;
-}
-
 .content {
   flex: 1;
-  padding: 20px;
   overflow-y: auto;
 }
 
@@ -197,4 +50,52 @@ body {
   .collapse-button {
     display: block;
   }
+}
+
+.header {
+  padding: 20px;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: row;
+}
+
+.app.dark .header {
+  background-color: rgba(30, 30, 30, 0.9);
+}
+
+.header h1 {
+  margin: auto 0;
+  margin-left: 15px;
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 20px;
+  }
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-toggle {
+  width: 5%;
+  height: 100%;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 1.5em;
+  transition: color 0.3s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  background-color: #fff;
+  min-width: 45px
+}
+
+.app.dark .menu-toggle {
+  color: #fff;
+  background-color: #444;
 }

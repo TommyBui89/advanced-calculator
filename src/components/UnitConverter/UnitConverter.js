@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './UnitConverter.css';
 
 const unitCategories = {
@@ -53,72 +53,116 @@ const unitCategories = {
 };
 
 const UnitConverter = () => {
-    const [category, setCategory] = useState('length');
-    const [fromUnit, setFromUnit] = useState('meters');
-    const [toUnit, setToUnit] = useState('kilometers');
-    const [value, setValue] = useState('');
-    const [result, setResult] = useState('');
+    const [conversions, setConversions] = useState({
+        length: { fromUnit: 'meters', toUnit: 'kilometers', value: '', result: '' },
+        weight: { fromUnit: 'grams', toUnit: 'kilograms', value: '', result: '' },
+        volume: { fromUnit: 'liters', toUnit: 'milliliters', value: '', result: '' },
+    });
 
-    const handleConvert = () => {
-        const conversionRate = unitCategories[category].conversion[fromUnit][toUnit];
-        const convertedValue = parseFloat(value) * conversionRate;
-        setResult(convertedValue.toFixed(2));
+    const handleConvert = useCallback((category) => {
+        const { fromUnit, toUnit, value } = conversions[category];
+        if (value) {
+            const conversionRate = unitCategories[category].conversion[fromUnit][toUnit];
+            const convertedValue = parseFloat(value) * conversionRate;
+            setConversions(prev => ({
+                ...prev,
+                [category]: {
+                    ...prev[category],
+                    result: convertedValue.toFixed(2),
+                }
+            }));
+        } else {
+            setConversions(prev => ({
+                ...prev,
+                [category]: {
+                    ...prev[category],
+                    result: '',
+                }
+            }));
+        }
+    }, [conversions]);
+
+    useEffect(() => {
+        Object.keys(conversions).forEach(category => handleConvert(category));
+    }, [conversions, handleConvert]);
+
+    const handleChange = (category, field, value) => {
+        setConversions(prev => ({
+            ...prev,
+            [category]: {
+                ...prev[category],
+                [field]: value,
+            }
+        }));
+    };
+
+    const handleSwitchUnits = (category) => {
+        setConversions(prev => ({
+            ...prev,
+            [category]: {
+                fromUnit: prev[category].toUnit,
+                toUnit: prev[category].fromUnit,
+                value: prev[category].result,
+                result: prev[category].value,
+            }
+        }));
     };
 
     return (
         <div className="converter-container">
-            <h2>Unit Converter</h2>
-            <div className="converter">
-                <div className="input-group">
-                    <div className="input-container">
-                        <label>Category</label>
-                        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                            {Object.keys(unitCategories).map((key) => (
-                                <option key={key} value={key}>
-                                    {key.charAt(0).toUpperCase() + key.slice(1)}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="input-container">
-                        <label>From Unit</label>
-                        <select value={fromUnit} onChange={(e) => setFromUnit(e.target.value)}>
-                            {unitCategories[category].units.map((unit) => (
-                                <option key={unit.value} value={unit.value}>
-                                    {unit.label}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="input-container">
-                        <label>To Unit</label>
-                        <select value={toUnit} onChange={(e) => setToUnit(e.target.value)}>
-                            {unitCategories[category].units.map((unit) => (
-                                <option key={unit.value} value={unit.value}>
-                                    {unit.label}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="input-container">
-                        <label>Value</label>
-                        <input
-                            type="number"
-                            value={value}
-                            onChange={(e) => setValue(e.target.value)}
-                            placeholder="Enter value"
-                        />
+            {Object.keys(unitCategories).map(category => (
+                <div key={category} className="converter">
+                    <h3>{category.charAt(0).toUpperCase() + category.slice(1)} Converter</h3>
+                    <div className="input-group">
+                        <div className="input-container">
+                            <label>Value</label>
+                            <input
+                                type="number"
+                                value={conversions[category].value}
+                                onChange={(e) => handleChange(category, 'value', e.target.value)}
+                                placeholder="Enter value"
+                            />
+                        </div>
+                        <div className="input-container">
+                            <label>From Unit</label>
+                            <select
+                                value={conversions[category].fromUnit}
+                                onChange={(e) => handleChange(category, 'fromUnit', e.target.value)}
+                            >
+                                {unitCategories[category].units.map((unit) => (
+                                    <option key={unit.value} value={unit.value}>
+                                        {unit.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="switch-container" onClick={() => handleSwitchUnits(category)}>
+                            <span className="switch-button">⇆</span>
+                        </div>
+                        <div className="input-container">
+                            <label>Result</label>
+                            <input
+                                type="text"
+                                value={conversions[category].result}
+                                readOnly
+                            />
+                        </div>
+                        <div className="input-container">
+                            <label>To Unit</label>
+                            <select
+                                value={conversions[category].toUnit}
+                                onChange={(e) => handleChange(category, 'toUnit', e.target.value)}
+                            >
+                                {unitCategories[category].units.map((unit) => (
+                                    <option key={unit.value} value={unit.value}>
+                                        {unit.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div className="button-group">
-                    <button className="convert-button" onClick={handleConvert}>Convert</button>
-                </div>
-                {result && (
-                    <div className="result-container">
-                        <h3>Result: {result} {toUnit}</h3>
-                    </div>
-                )}
-            </div>
+            ))}
         </div>
     );
 };

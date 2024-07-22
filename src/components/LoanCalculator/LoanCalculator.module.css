@@ -4,13 +4,12 @@
     padding: 20px;
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
-    border-radius: 10px;
     text-align: center;
     color: #000;
 }
 
 .dark {
-    background: rgba(30, 30, 30, 0.9);
+    background: transparent;
     color: #fff;
 }
 
