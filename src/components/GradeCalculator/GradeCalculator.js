@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './GradeCalculator.css';
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const GradeCalculator = ({ theme }) => {
     const [grades, setGrades] = useState([{ name: '', score: '', weight: '' }]);
@@ -12,9 +11,7 @@ const GradeCalculator = ({ theme }) => {
     const [goalGrade, setGoalGrade] = useState('');
     const [error, setError] = useState('');
 
-    const calculateTotalWeight = () => {
-        return grades.reduce((total, grade) => total + (parseFloat(grade.weight) || 0), 0);
-    };
+    const calculateTotalWeight = () => grades.reduce((total, grade) => total + (parseFloat(grade.weight) || 0), 0);
 
     const handleAddGrade = () => {
         const totalWeight = calculateTotalWeight();
@@ -102,114 +99,54 @@ const GradeCalculator = ({ theme }) => {
         return 'F';
     };
 
-    const chartData = {
-        labels: grades.map((grade, index) => grade.name || `Assessment ${index + 1}`),
-        datasets: [
-            {
-                label: 'Scores',
-                data: grades.map((grade) => parseFloat(grade.score) || 0),
-                backgroundColor: theme === 'dark' ? '#36A2EB' : 'rgba(75,192,192,0.4)',
-                borderColor: theme === 'dark' ? '#36A2EB' : 'rgba(75,192,192,1)',
-                borderWidth: 1,
-            },
-            {
-                label: 'Weights',
-                data: grades.map((grade) => parseFloat(grade.weight) || 0),
-                backgroundColor: theme === 'dark' ? '#FF6384' : 'rgba(255,99,132,0.4)',
-                borderColor: theme === 'dark' ? '#FF6384' : 'rgba(255,99,132,1)',
-                borderWidth: 1,
-            },
-        ],
-    };
-
-    const chartOptions = {
-        scales: {
-            x: {
-                ticks: {
-                    color: theme === 'dark' ? '#fff' : '#000',
-                },
-                grid: {
-                    color: theme === 'dark' ? '#444' : '#ccc',
-                },
-                title: {
-                    display: true,
-                    text: 'Assessments',
-                    color: theme === 'dark' ? '#fff' : '#000',
-                },
-            },
-            y: {
-                beginAtZero: true,
-                max: 100,
-                ticks: {
-                    color: theme === 'dark' ? '#fff' : '#000',
-                },
-                grid: {
-                    color: theme === 'dark' ? '#444' : '#ccc',
-                },
-                title: {
-                    display: true,
-                    text: 'Scores and Weights (%)',
-                    color: theme === 'dark' ? '#fff' : '#000',
-                },
-            },
-        },
-        plugins: {
-            legend: {
-                labels: {
-                    color: theme === 'dark' ? '#fff' : '#000',
-                },
-            },
-        },
-    };
+    const chartData = grades.map((grade, index) => ({
+        name: grade.name || `Assessment ${index + 1}`,
+        score: parseFloat(grade.score) || 0,
+        weight: parseFloat(grade.weight) || 0,
+    }));
 
     return (
-        <div className={`grade-calculator-container ${theme}`}>
-            {error && <div className="error">{error}</div>}
-            <div className="grades-input">
-                {grades.map((grade, index) => (
-                    <div key={index} className="grade-input-row">
-                        <input
-                            type="text"
-                            placeholder="Assessment Name"
-                            value={grade.name}
-                            onChange={(e) => handleGradeChange(index, 'name', e.target.value)}
-                        />
-                        <input
-                            type="number"
-                            placeholder="Score"
-                            value={grade.score}
-                            onChange={(e) => handleGradeChange(index, 'score', e.target.value)}
-                        />
-                        <input
-                            type="number"
-                            placeholder="Weight (%)"
-                            value={grade.weight}
-                            onChange={(e) => handleGradeChange(index, 'weight', e.target.value)}
-                        />
-                        <button onClick={() => handleDeleteGrade(index)} className="delete-grade-button">Delete</button>
+        <div className={`gc-container ${theme}`}>
+            <div className="gc-input-section">
+                <div className="gc-grades-input">
+                    <label htmlFor="grading-Inputs">Grading Inputs</label>
+                    <div className='gc-line'></div>
+                    {grades.map((grade, index) => (
+                        <div key={index} className="gc-grade-row">
+                            <input
+                                type="text"
+                                placeholder="Assessment Name"
+                                value={grade.name}
+                                onChange={(e) => handleGradeChange(index, 'name', e.target.value)}
+                            />
+                            <input
+                                type="number"
+                                placeholder="Score"
+                                value={grade.score}
+                                onChange={(e) => handleGradeChange(index, 'score', e.target.value)}
+                            />
+                            <input
+                                type="number"
+                                placeholder="Weight (%)"
+                                value={grade.weight}
+                                onChange={(e) => handleGradeChange(index, 'weight', e.target.value)}
+                            />
+                            <button onClick={() => handleDeleteGrade(index)} className="gc-delete-grade-button">
+                                <FontAwesomeIcon icon={faTrash} />
+                            </button>
+                        </div>
+                    ))}
+
+                    {error && <div className="gc-error">{error}</div>}
+
+                    <div className="gc-add-grade-container">
+                        <button onClick={handleAddGrade} className="gc-add-grade-button">Add Another Assessment</button>
                     </div>
-                ))}
-            </div>
-
-            <div className="add-grade-container">
-                <button onClick={handleAddGrade} className="add-grade-button">Add Another Assessment</button>
-            </div>
-
-            <div className="button-container">
-                <div className="grading-system-container">
-                    <label htmlFor="grading-system">Grading System: </label>
-                    <select
-                        id="grading-system"
-                        value={gradingSystem}
-                        onChange={(e) => setGradingSystem(e.target.value)}
-                    >
-                        <option value="percentage">Percentage</option>
-                        <option value="gpa">GPA</option>
-                        <option value="letter">Letter Grade</option>
-                    </select>
                 </div>
-                <div className="goal-container">
-                    <label htmlFor="goal-grade">Goal Grade: </label>
+
+                <div className="gc-goal-container">
+                    <label htmlFor="goal-grade">Goal Grade</label>
+                    <div className='gc-line'></div>
                     <input
                         type="number"
                         id="goal-grade"
@@ -217,16 +154,51 @@ const GradeCalculator = ({ theme }) => {
                         onChange={(e) => setGoalGrade(e.target.value)}
                         placeholder="Enter Goal Grade"
                     />
-                    <button onClick={handleCalculateGoal} className="calculate-goal-button">Calculate Required Score</button>
-                </div>
-                <div className="calculate-grade-container">
-                    <button onClick={handleCalculateGrade} className="calculate-grade-button">Calculate Final Grade</button>
+                    <button onClick={handleCalculateGoal} className="gc-calculate-goal-button">Calculate Required Score</button>
                 </div>
             </div>
+            
+            <div className="gc-chart-section">
+                <div className="gc-chart-container">
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={chartData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke={theme === 'dark' ? '#555' : '#ccc'} />
+                            <XAxis
+                                dataKey="name"
+                                tick={{ fill: theme === 'dark' ? '#ffffff' : '#000' }}
+                            />
+                            <YAxis
+                                tick={{ fill: theme === 'dark' ? '#ffffff' : '#000' }}
+                            />
+                            <Tooltip contentStyle={{ backgroundColor: theme === 'dark' ? '#333' : '#fff', color: theme === 'dark' ? '#fff' : '#000' }} />
+                            <Legend wrapperStyle={{ color: theme === 'dark' ? '#ffffff' : '#000' }} />
+                            <Bar dataKey="score" fill={theme === 'dark' ? '#36A2EB' : 'rgba(75,192,192,0.4)'} />
+                            <Bar dataKey="weight" fill={theme === 'dark' ? '#FF6384' : 'rgba(255,99,132,0.4)'} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
 
-            {finalGrade && <div className="final-grade">Final Grade: {finalGrade}</div>}
-            <div className="chart-container">
-                <Bar data={chartData} options={chartOptions} />
+                <div className="gc-final-grade-container">
+                    <div className="gc-grading-system-container">
+                        <label htmlFor="grading-system">Grading System</label>
+                        <div className='gc-line'></div>
+                        <select
+                            id="grading-system"
+                            value={gradingSystem}
+                            onChange={(e) => setGradingSystem(e.target.value)}
+                        >
+                            <option value="percentage">Percentage</option>
+                            <option value="gpa">GPA</option>
+                            <option value="letter">Letter Grade</option>
+                        </select>
+
+                        <div className="gc-calculate-grade-container">
+                            <button onClick={handleCalculateGrade} className="gc-calculate-grade-button">Calculate Final Grade</button>
+                        </div>
+                    </div>
+
+                    {finalGrade && <div className="gc-final-grade">Final Grade: {finalGrade}</div>}
+                </div>
             </div>
         </div>
     );

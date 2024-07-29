@@ -28,12 +28,16 @@ const App = () => {
         setIsMenuVisible(!isMenuVisible);
     };
 
+    const closeMenu = () => {
+        setIsMenuVisible(false);
+    };
+
     return (
         <div className={`app ${theme}`}>
             <Router>
-            <SideMenu toggleTheme={toggleTheme} theme={theme} isMenuVisible={isMenuVisible} />
+                <SideMenu toggleTheme={toggleTheme} theme={theme} isMenuVisible={isMenuVisible} closeMenu={closeMenu} />
                 <div className="main-content">
-                    <Header toggleMenu={toggleMenu}/>
+                    <Header toggleMenu={toggleMenu} isMenuVisible={isMenuVisible} />
                     <div className="content">
                         <Routes>
                             <Route path="/" element={<Dashboard />} />
@@ -52,7 +56,7 @@ const App = () => {
     );
 };
 
-const Header = ({ toggleMenu }) => {
+const Header = ({ toggleMenu, isMenuVisible }) => {
     const location = useLocation();
     const routeNameMap = {
         '/': 'Dashboard',
@@ -68,7 +72,7 @@ const Header = ({ toggleMenu }) => {
     return (
         <header className="header">
             <button className="menu-toggle" onClick={toggleMenu}>
-                <FontAwesomeIcon icon={faBars} />
+                <FontAwesomeIcon icon={isMenuVisible ? faTimes : faBars} />
             </button>
             <h1>{routeNameMap[location.pathname] || 'Dashboard'}</h1>
         </header>

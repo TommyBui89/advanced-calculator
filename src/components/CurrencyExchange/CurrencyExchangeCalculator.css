@@ -172,10 +172,15 @@ body.dark .converter-container {
     .search-container, 
     .live-rates-header {
         width: 100%;
+        flex-direction: column;
     }
 
     .live-rates-header label{
         text-align: left;
+    }
+
+    .live-rates-header select {
+        width: 100%;
     }
 }
 

@@ -13,19 +13,6 @@
   display: none;
 }
 
-@media (max-width: 768px) {
-  .side-menu.collapsed {
-    padding: 20px 2px;
-  }
-}
-
-.side-menu h2 {
-  margin-top: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .side-menu ul {
   list-style: none;
   padding: 0;
@@ -53,20 +40,11 @@
   padding: 10px 0;
 }
 
-.side-menu.collapsed ul li a {
-  justify-content: center;
-}
-
 .theme-toggle-container {
   margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.side-menu.collapsed .theme-toggle-container {
-  flex-direction: column;
-  align-items: center;
 }
 
 .react-toggle {
@@ -107,6 +85,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: black;
 }
 
 .theme-toggle-text {
@@ -122,22 +101,7 @@
   color: #fff;
 }
 
-@media (max-width: 768px) {
-  .side-menu {
-      width: 80px;
-      padding: 20px 10px;
-  }
-
-  .theme-toggle-text {
-      display: none;
-  }
-}
-
-.app.dark .side-menu {
-  background-color: #444;
-}
-
-.app.dark .side-menu ul li a {
+.app.dark .toggle-icon {
   color: #fff;
 }
 
@@ -150,35 +114,6 @@
   color: #fff;
 }
 
-@media (max-width: 768px) {
-  .side-menu {
-      width: 80px;
-  }
-
-  .theme-toggle-container {
-      flex-direction: column;
-      align-items: center;
-  }
-}
-
-.collapse-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.collapse-button:hover {
-  background-color: #0056b3;
-}
-
-@media (max-width: 768px) {
-  .collapse-button {
-    display: block;
-  }
+.app.dark .side-menu.visible {
+  background-color: #444;
 }

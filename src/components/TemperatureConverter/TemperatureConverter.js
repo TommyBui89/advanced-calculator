@@ -70,6 +70,8 @@ const TemperatureConverter = () => {
     const [isCelsius, setIsCelsius] = useState(true);
     const [weather, setWeather] = useState(null);
     const [weatherData, setWeatherData] = useState([]);
+    const [isWeatherCelsius, setIsWeatherCelsius] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const handleConvert = () => {
         if (isCelsius) {
@@ -98,24 +100,30 @@ const TemperatureConverter = () => {
             setResult('');
         }
         setIsCelsius(!isCelsius);
+        setIsWeatherCelsius(!isWeatherCelsius);
     };
 
     const fetchWeather = (latitude, longitude, locationName) => {
+        setLoading(true);
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`)
             .then(response => response.json())
             .then(data => {
                 if (data.main) {
                     const weatherInfo = {
                         name: data.name || locationName,
-                        temp: data.main.temp,
+                        tempCelsius: data.main.temp,
+                        tempFahrenheit: (data.main.temp * 9 / 5) + 32,
                         description: data.weather[0].description,
                     };
                     setWeather(weatherInfo);
-                    setInputValue(data.main.temp);
-                    setIsCelsius(true);
+                    setInputValue(isWeatherCelsius ? data.main.temp : ((data.main.temp * 9 / 5) + 32).toFixed(2));
                 }
+                setLoading(false);
             })
-            .catch(error => console.error('Error fetching weather data:', error));
+            .catch(error => {
+                console.error('Error fetching weather data:', error);
+                setLoading(false);
+            });
     };
 
     const handleGetCurrentLocation = () => {
@@ -135,6 +143,7 @@ const TemperatureConverter = () => {
     };
 
     const fetchAllWeather = async () => {
+        setLoading(true);
         const weatherPromises = predefinedLocations.map(loc =>
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${loc.latitude}&lon=${loc.longitude}&units=metric&appid=${API_KEY}`)
                 .then(response => response.json())
@@ -147,6 +156,7 @@ const TemperatureConverter = () => {
 
         const weatherResults = await Promise.all(weatherPromises);
         setWeatherData(weatherResults);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -156,9 +166,20 @@ const TemperatureConverter = () => {
     }, []);
 
     const handleWeatherItemClick = (data) => {
-        setInputValue(data.temp);
-        setIsCelsius(true);
-        setWeather(data);
+        const tempFahrenheit = (data.temp * 9 / 5) + 32;
+        setInputValue(isWeatherCelsius ? data.temp : tempFahrenheit.toFixed(2));
+        setWeather({
+            ...data,
+            tempCelsius: data.temp,
+            tempFahrenheit: tempFahrenheit
+        });
+    };
+
+    const toggleWeatherUnit = () => {
+        setIsCelsius(!isCelsius);
+        setIsWeatherCelsius(!isWeatherCelsius);
+        setInputValue(prevValue => isWeatherCelsius ? ((prevValue * 9 / 5) + 32).toFixed(2) : ((prevValue - 32) * 5 / 9).toFixed(2));
+        setResult('');
     };
 
     return (
@@ -196,19 +217,30 @@ const TemperatureConverter = () => {
                     <button onClick={handleGetCurrentLocation} className="location-button">Get Current Location Weather</button>
                 </div>
             </div>
-            {weather && (
+            {loading ? (
+                <div className="loading-spinner">
+                    <i className="fas fa-spinner fa-spin"></i>
+                </div>
+            ) : weather && (
                 <div className="weather-info">
                     <h2>Current Weather</h2>
                     <p><strong>Location:</strong> <i className={getWeatherIcon(weather.description)}></i> {weather.name}</p>
-                    <p><strong>Temperature:</strong> {weather.temp} °C</p>
+                    <p><strong>Temperature:</strong> 
+                        {weather.tempCelsius !== undefined && weather.tempCelsius.toFixed(2)} °C / {weather.tempFahrenheit !== undefined && weather.tempFahrenheit.toFixed(2)} °F
+                    </p>
                     <p><strong>Weather:</strong> {weather.description}</p>
                 </div>
             )}
-            <h2>Weather in Various Locations</h2>
+            <div>
+                <h2>Weather in Various Locations</h2>
+                <button onClick={toggleWeatherUnit} className="toggle-weather-unit">
+                    Show in {isWeatherCelsius ? 'Fahrenheit' : 'Celsius'}
+                </button>
+            </div>
             <div className="weather-list">
                 {weatherData.map((data, index) => (
                     <div key={index} className="weather-item" onClick={() => handleWeatherItemClick(data)}>
-                        <i className={getWeatherIcon(data.description)}></i> <strong>{data.name}</strong>: {data.temp} °C
+                        <i className={getWeatherIcon(data.description)}></i> <strong>{data.name}</strong>: {isWeatherCelsius ? data.temp : (data.temp * 9 / 5 + 32).toFixed(2)} °{isWeatherCelsius ? 'C' : 'F'}
                     </div>
                 ))}
             </div>

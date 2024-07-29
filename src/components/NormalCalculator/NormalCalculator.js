@@ -69,7 +69,7 @@ const NormalCalculator = () => {
             <div className="history">
                 <div className="history_container">
                     <h2>History</h2>
-                    <button onClick={clearHistory}>Clear History</button>
+                    <button onClick={clearHistory}>Clear</button>
                 </div>
                 <ul className="history-list">
                     {history.map((item, index) => (

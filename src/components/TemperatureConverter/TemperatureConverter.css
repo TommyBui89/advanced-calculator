@@ -183,3 +183,20 @@ body.dark .weather-item {
 .app.dark .location-button:hover {
     background-color: #218838;
 }
+
+.toggle-weather-unit {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 310px;
+    font-size: 1.2em;
+}
+
+.toggle-weather-unit:hover {
+    background-color: #0056b3;
+}
