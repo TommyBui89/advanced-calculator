@@ -104,10 +104,16 @@ button {
     font-size: 1em;
     border: none;
     background-color: white;
+    color: black; /* Ensure the text color is black */
     cursor: pointer;
     transition: background-color 0.3s;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+}
+
+button.clear {
+    background-color: #dc3545;
+    color: white; /* Ensure the text color is white for clear button */
 }
 
 @media (max-width: 768px) {
@@ -119,7 +125,12 @@ button {
 
 .app.dark button {
     background-color: #444;
-    color: #f1f1f1;
+    color: white; /* Ensure the text color is white */
+}
+
+.app.dark button.clear {
+    background-color: #dc3545;
+    color: white; /* Ensure the text color is white for clear button */
 }
 
 button:hover {
@@ -128,6 +139,10 @@ button:hover {
 
 button:active {
     background-color: #bbb;
+}
+
+.app.dark button:hover {
+    background-color: #666;
 }
 
 .history {
@@ -211,7 +226,7 @@ button:active {
     margin: auto 0;
     padding: 5px 10px;
     background-color: #dc3545;
-    color: #fff;
+    color: white; /* Ensure the text color is white for the clear button */
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -221,7 +236,7 @@ button:active {
 .app.dark .history button {
     padding: 5px 10px;
     background-color: rgba(30, 30, 30, 0.9);
-    color: #fff;
+    color: white; /* Ensure the text color is white for the clear button */
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;

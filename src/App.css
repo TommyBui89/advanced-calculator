@@ -57,6 +57,7 @@ body {
   background-color: #f4f4f4;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .app.dark .header {
@@ -64,7 +65,7 @@ body {
 }
 
 .header h1 {
-  margin: auto 0;
+  margin: 0;
   margin-left: 15px;
 }
 
@@ -81,8 +82,11 @@ body {
 }
 
 .menu-toggle {
-  width: 5%;
-  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
   background: none;
   border: none;
   color: #333;
@@ -92,14 +96,19 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   background-color: #fff;
-  min-width: 45px;
 }
 
-.menu-toggle icon {
-  margin: auto;
+.menu-toggle:hover {
+  color: #007bff;
+  background-color: #e6e6e6;
 }
 
 .app.dark .menu-toggle {
   color: #fff;
   background-color: #444;
+}
+
+.app.dark .menu-toggle:hover {
+  color: #007bff;
+  background-color: #555;
 }

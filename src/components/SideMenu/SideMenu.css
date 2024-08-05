@@ -93,6 +93,16 @@
   margin-left: 10px;
 }
 
+.side-menu ul li a:hover {
+  color: black; /* Change the color to whatever you prefer */
+}
+
+.side-menu ul li a svg:hover {
+  color: black; /* Change the color to whatever you prefer */
+  transform: scale(1.1); /* Slightly enlarge the icon */
+  transition: transform 0.2s, color 0.2s; /* Smooth transition for both transform and color */
+}
+
 .app.light .theme-toggle-text {
   color: #fff;
 }
@@ -116,4 +126,14 @@
 
 .app.dark .side-menu.visible {
   background-color: #444;
+}
+
+.app.dark .side-menu ul li a:hover {
+  color: #007bff; /* Change the color to whatever you prefer */
+}
+
+.app.dark .side-menu ul li a svg:hover {
+  color: #007bff; /* Change the color to whatever you prefer */
+  transform: scale(1.1); /* Slightly enlarge the icon */
+  transition: transform 0.2s, color 0.2s; /* Smooth transition for both transform and color */
 }

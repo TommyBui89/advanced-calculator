@@ -1,3 +1,25 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.app {
+    display: flex;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.app.light {
+    background-color: #fff;
+    color: #000;
+}
+
+.app.dark {
+    background-color: rgba(30, 30, 30, 0.9);
+    color: #fff;
+}
+
 .gc-container {
     margin: 0 auto;
     padding: 20px;
@@ -8,7 +30,6 @@
     flex-direction: row;
     max-width: 100%;
     gap: 20px;
-    max-height: 100vh;
     overflow: hidden;
 }
 
@@ -251,6 +272,19 @@
 }
 
 @media (max-width: 768px) {
+    .gc-container {
+        flex-direction: column;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .gc-input-section,
+    .gc-chart-section {
+        width: 100%;
+        min-width: none;
+        max-width: none;
+    }
+    
     .gc-grade-row {
         flex-direction: column;
     }

@@ -52,6 +52,14 @@ const unitCategories = {
     },
 };
 
+const formatNumberWithCommas = (value) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+const removeCommas = (value) => {
+    return value.toString().replace(/,/g, '');
+};
+
 const UnitConverter = () => {
     const [conversions, setConversions] = useState({
         length: { fromUnit: 'meters', toUnit: 'kilometers', value: '', result: '' },
@@ -62,13 +70,14 @@ const UnitConverter = () => {
     const handleConvert = useCallback((category) => {
         const { fromUnit, toUnit, value } = conversions[category];
         if (value) {
+            const numericValue = parseFloat(removeCommas(value));
             const conversionRate = unitCategories[category].conversion[fromUnit][toUnit];
-            const convertedValue = parseFloat(value) * conversionRate;
+            const convertedValue = numericValue * conversionRate;
             setConversions(prev => ({
                 ...prev,
                 [category]: {
                     ...prev[category],
-                    result: convertedValue.toFixed(2),
+                    result: formatNumberWithCommas(convertedValue.toFixed(2)),
                 }
             }));
         } else {
@@ -87,11 +96,12 @@ const UnitConverter = () => {
     }, [conversions, handleConvert]);
 
     const handleChange = (category, field, value) => {
+        const formattedValue = field === 'value' ? formatNumberWithCommas(removeCommas(value)) : value;
         setConversions(prev => ({
             ...prev,
             [category]: {
                 ...prev[category],
-                [field]: value,
+                [field]: formattedValue,
             }
         }));
     };
@@ -117,7 +127,7 @@ const UnitConverter = () => {
                         <div className="input-container">
                             <label>Value</label>
                             <input
-                                type="number"
+                                type="text"
                                 value={conversions[category].value}
                                 onChange={(e) => handleChange(category, 'value', e.target.value)}
                                 placeholder="Enter value"

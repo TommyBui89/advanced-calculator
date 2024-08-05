@@ -9,7 +9,9 @@ const GradeCalculator = ({ theme }) => {
     const [finalGrade, setFinalGrade] = useState('');
     const [gradingSystem, setGradingSystem] = useState('percentage');
     const [goalGrade, setGoalGrade] = useState('');
-    const [error, setError] = useState('');
+    const [gradeInputError, setGradeInputError] = useState('');
+    const [goalError, setGoalError] = useState('');
+    const [weightError, setWeightError] = useState('');
 
     const calculateTotalWeight = () => grades.reduce((total, grade) => total + (parseFloat(grade.weight) || 0), 0);
 
@@ -18,15 +20,25 @@ const GradeCalculator = ({ theme }) => {
         if (totalWeight < 100) {
             setGrades([...grades, { name: '', score: '', weight: '' }]);
         } else {
-            setError('Total weight cannot exceed 100%.');
+            setGradeInputError('Total weight cannot exceed 100%.');
         }
     };
 
     const handleGradeChange = (index, field, value) => {
         const newGrades = [...grades];
         newGrades[index][field] = value;
+
+        if (field === 'weight') {
+            const totalWeight = calculateTotalWeight() - (parseFloat(grades[index].weight) || 0) + (parseFloat(value) || 0);
+            if (totalWeight > 100) {
+                setGradeInputError('Total weight cannot exceed 100%.');
+                return;
+            } else {
+                setGradeInputError('');
+            }
+        }
+
         setGrades(newGrades);
-        setError('');
     };
 
     const handleDeleteGrade = (index) => {
@@ -49,8 +61,9 @@ const GradeCalculator = ({ theme }) => {
 
         if (totalWeight === 100) {
             setFinalGrade(convertGrade(weightedSum.toFixed(2)));
+            setWeightError('');
         } else {
-            setError('The total weight should be 100%. Please adjust the weights.');
+            setWeightError('The total weight should be 100%. Please adjust the weights.');
         }
     };
 
@@ -71,9 +84,9 @@ const GradeCalculator = ({ theme }) => {
         const requiredScore = (parseFloat(goalGrade) - weightedSum) / (remainingWeight / 100);
 
         if (totalWeight <= 100 && requiredScore <= 100) {
-            setError(`You need to score at least ${requiredScore.toFixed(2)}% in the remaining ${remainingWeight}% weight to achieve your goal.`);
+            setGoalError(`You need to score at least ${requiredScore.toFixed(2)}% in the remaining ${remainingWeight}% weight to achieve your goal.`);
         } else {
-            setError('It is not possible to achieve the goal with the current grades and weights.');
+            setGoalError('It is not possible to achieve the goal with the current grades and weights.');
         }
     };
 
@@ -137,7 +150,7 @@ const GradeCalculator = ({ theme }) => {
                         </div>
                     ))}
 
-                    {error && <div className="gc-error">{error}</div>}
+                    {gradeInputError && <div className="gc-error">{gradeInputError}</div>}
 
                     <div className="gc-add-grade-container">
                         <button onClick={handleAddGrade} className="gc-add-grade-button">Add Another Assessment</button>
@@ -155,6 +168,7 @@ const GradeCalculator = ({ theme }) => {
                         placeholder="Enter Goal Grade"
                     />
                     <button onClick={handleCalculateGoal} className="gc-calculate-goal-button">Calculate Required Score</button>
+                    {goalError && <div className="gc-error">{goalError}</div>}
                 </div>
             </div>
             
@@ -169,6 +183,7 @@ const GradeCalculator = ({ theme }) => {
                             />
                             <YAxis
                                 tick={{ fill: theme === 'dark' ? '#ffffff' : '#000' }}
+                                domain={[0, 100]}
                             />
                             <Tooltip contentStyle={{ backgroundColor: theme === 'dark' ? '#333' : '#fff', color: theme === 'dark' ? '#fff' : '#000' }} />
                             <Legend wrapperStyle={{ color: theme === 'dark' ? '#ffffff' : '#000' }} />
@@ -191,7 +206,7 @@ const GradeCalculator = ({ theme }) => {
                             <option value="gpa">GPA</option>
                             <option value="letter">Letter Grade</option>
                         </select>
-
+                        {weightError && <div className="gc-error">{weightError}</div>}
                         <div className="gc-calculate-grade-container">
                             <button onClick={handleCalculateGrade} className="gc-calculate-grade-button">Calculate Final Grade</button>
                         </div>

@@ -24,7 +24,7 @@ const LoanCalculator = ({ theme }) => {
     };
 
     const calculatePayment = () => {
-        const principalAmount = parseFloat(principal);
+        const principalAmount = parseFloat(principal.replace(/,/g, ''));
         const annualInterestRate = parseFloat(interestRate) / 100;
         const numberOfPayments = parseInt(years) * paymentPeriods[paymentFrequency];
         const interestRatePerPeriod = annualInterestRate / paymentPeriods[paymentFrequency];
@@ -35,9 +35,9 @@ const LoanCalculator = ({ theme }) => {
         if (!isNaN(payment) && payment !== Infinity) {
             const totalPaid = payment * numberOfPayments;
             const interestPaid = totalPaid - principalAmount;
-            setPaymentAmount(payment.toFixed(2));
-            setTotalInterest(interestPaid.toFixed(2));
-            setFinalTotal(totalPaid.toFixed(2));
+            setPaymentAmount(formatNumberWithCommas(payment.toFixed(2)));
+            setTotalInterest(formatNumberWithCommas(interestPaid.toFixed(2)));
+            setFinalTotal(formatNumberWithCommas(totalPaid.toFixed(2)));
             calculateAmortization(principalAmount, interestRatePerPeriod, numberOfPayments, payment);
         } else {
             setPaymentAmount('');
@@ -69,6 +69,31 @@ const LoanCalculator = ({ theme }) => {
         setAmortizationData([]);
     };
 
+    const formatNumberWithCommas = (value) => {
+        return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
+    const handlePrincipalChange = (e) => {
+        const value = e.target.value.replace(/,/g, '');
+        if (!isNaN(value)) {
+            setPrincipal(formatNumberWithCommas(value));
+        }
+    };
+
+    const handleInterestRateChange = (e) => {
+        const value = e.target.value.replace(/,/g, '');
+        if (!isNaN(value)) {
+            setInterestRate(formatNumberWithCommas(value));
+        }
+    };
+
+    const handleYearsChange = (e) => {
+        const value = e.target.value.replace(/,/g, '');
+        if (!isNaN(value)) {
+            setYears(formatNumberWithCommas(value));
+        }
+    };
+
     const chartData = {
         labels: amortizationData.map(data => `Period ${data.month}`),
         datasets: [
@@ -86,7 +111,7 @@ const LoanCalculator = ({ theme }) => {
         labels: ['Principal', 'Interest'],
         datasets: [
             {
-                data: [parseFloat(principal), parseFloat(totalInterest)],
+                data: [parseFloat(principal.replace(/,/g, '')), parseFloat(totalInterest.replace(/,/g, ''))],
                 backgroundColor: ['#36A2EB', '#FF6384'],
                 hoverBackgroundColor: ['#36A2EB', '#FF6384'],
             },
@@ -146,18 +171,18 @@ const LoanCalculator = ({ theme }) => {
                     <div className={styles.inputGroup}>
                         <label>Principal Amount</label>
                         <input
-                            type="number"
+                            type="text"
                             value={principal}
-                            onChange={(e) => setPrincipal(e.target.value)}
+                            onChange={handlePrincipalChange}
                             placeholder="Enter Principal Amount"
                         />
                     </div>
                     <div className={styles.inputGroup}>
                         <label>Annual Interest Rate (%)</label>
                         <input
-                            type="number"
+                            type="text"
                             value={interestRate}
-                            onChange={(e) => setInterestRate(e.target.value)}
+                            onChange={handleInterestRateChange}
                             placeholder="Enter Interest Rate"
                         />
                     </div>
@@ -166,9 +191,9 @@ const LoanCalculator = ({ theme }) => {
                     <div className={styles.inputGroup}>
                         <label>Loan Term (Years)</label>
                         <input
-                            type="number"
+                            type="text"
                             value={years}
-                            onChange={(e) => setYears(e.target.value)}
+                            onChange={handleYearsChange}
                             placeholder="Enter Loan Term"
                         />
                     </div>

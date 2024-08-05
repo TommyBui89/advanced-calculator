@@ -210,8 +210,9 @@ const CurrencyExchangeCalculator = () => {
     }, [amount, exchangeRate]);
 
     const handleConvert = () => {
-        if (amount && exchangeRate) {
-            setConvertedAmount((amount * exchangeRate).toFixed(2));
+        const numericAmount = parseFloat(amount.replace(/,/g, ''));
+        if (numericAmount && exchangeRate) {
+            setConvertedAmount(formatNumberWithCommas((numericAmount * exchangeRate).toFixed(2)));
         } else {
             setConvertedAmount('');
         }
@@ -236,6 +237,20 @@ const CurrencyExchangeCalculator = () => {
         setSearchQuery(e.target.value);
     };
 
+    const handleAmountChange = (e) => {
+        const value = e.target.value.replace(/,/g, '');
+        const numericValue = parseFloat(value);
+        if (!isNaN(numericValue)) {
+            setAmount(formatNumberWithCommas(value));
+        } else {
+            setAmount('');
+        }
+    };
+
+    const formatNumberWithCommas = (value) => {
+        return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
     const filteredRates = Object.keys(liveRates)
         .filter(currency => {
             const currencyName = currencyOptions.find(option => option.code === currency)?.name.toLowerCase() || '';
@@ -256,9 +271,9 @@ const CurrencyExchangeCalculator = () => {
                     <div className="input-container">
                         <label>Amount</label>
                         <input
-                            type="number"
+                            type="text"
                             value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
+                            onChange={handleAmountChange}
                             placeholder="Enter amount"
                         />
                     </div>
@@ -350,7 +365,7 @@ const CurrencyExchangeCalculator = () => {
                                         <td>
                                             {currencyOptions.find(option => option.code === currency)?.flag || ''} {currencyOptions.find(option => option.code === currency)?.name || currency}
                                         </td>
-                                        <td>{filteredRates[currency].toFixed(4)}</td>
+                                        <td>{formatNumberWithCommas(filteredRates[currency].toFixed(4))}</td>
                                     </tr>
                                 ))}
                             </tbody>
