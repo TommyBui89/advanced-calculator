@@ -9,6 +9,9 @@ import LoanCalculator from './components/LoanCalculator/LoanCalculator';
 import TimeZoneConverter from './components/TimeZoneConverter/TimeZoneConverter';
 import UnitConverter from './components/UnitConverter/UnitConverter';
 import GradeCalculator from './components/GradeCalculator/GradeCalculator';
+import CryptoPrices from './components/CryptoPrices/CryptoPrices';
+import CryptoCurrencies from './components/CryptoPrices/CryptoCurrencies';
+import CryptoDetails from './components/CryptoPrices/CryptoDetails';
 import './App.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -48,6 +51,9 @@ const App = () => {
                             <Route path="/timezone" element={<TimeZoneConverter />} />
                             <Route path="/unit" element={<UnitConverter />} />
                             <Route path="/grade" element={<GradeCalculator />} />
+                            <Route path="/crypto" element={<CryptoPrices />} />
+                            <Route path="/crypto/cryptocurrencies" element={<CryptoCurrencies />} />
+                            <Route path="/crypto/:coinId" element={<CryptoDetails />} />
                         </Routes>
                     </div>
                 </div>
@@ -66,7 +72,8 @@ const Header = ({ toggleMenu, isMenuVisible }) => {
         '/loan': 'Loan Calculator',
         '/timezone': 'Time Zone Converter',
         '/unit': 'Unit Converter',
-        '/grade': 'Grade Calculator'
+        '/grade': 'Grade Calculator',
+        '/crypto': 'Crypto Prices'
     };
 
     return (

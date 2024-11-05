@@ -137,3 +137,46 @@
   transform: scale(1.1); /* Slightly enlarge the icon */
   transition: transform 0.2s, color 0.2s; /* Smooth transition for both transform and color */
 }
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* Tooltip text positioned to the right */
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 50%; /* Center vertically */
+  left: 110%; /* Position to the right of the icon */
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow on the left */
+.tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%; /* Align the arrow to the left edge of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+
+/* Show the tooltip text when hovering over the icon */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

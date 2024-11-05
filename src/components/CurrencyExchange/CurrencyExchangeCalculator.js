@@ -365,7 +365,7 @@ const CurrencyExchangeCalculator = () => {
                                         <td>
                                             {currencyOptions.find(option => option.code === currency)?.flag || ''} {currencyOptions.find(option => option.code === currency)?.name || currency}
                                         </td>
-                                        <td>{formatNumberWithCommas(filteredRates[currency].toFixed(4))}</td>
+                                        <td>{formatNumberWithCommas(filteredRates[currency].toFixed(2))}</td>
                                     </tr>
                                 ))}
                             </tbody>

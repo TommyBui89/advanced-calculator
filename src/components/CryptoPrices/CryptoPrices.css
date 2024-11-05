@@ -1,0 +1,45 @@
+/* Global Crypto Stats Container */
+.heading {
+  margin: 20px 0;
+  font-size: 2.2rem;
+  text-align: center;
+  font-weight: 700;
+  color: var(--pink);
+}
+
+.crypto-heading {
+  margin: 20px 0;
+  font-size: 2.2rem;
+  text-align: center;
+  font-weight: 700;
+  color: var(--pink);
+}
+
+.stats-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.ant-statistic {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.ant-statistic-title {
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+/* Responsive Styling */
+@media screen and (max-width: 768px) {
+  .heading {
+    font-size: 1.8rem;
+  }
+
+  .crypto-heading {
+    font-size: 1.8rem;
+  }
+}

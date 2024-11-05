@@ -1,0 +1,45 @@
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    color: var(--pink);
+  }
+  
+  .chart-title {
+    color: var(--pink) !important;
+  }
+  
+  .price-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .price-change {
+    font-weight: 900;
+  }
+  
+  .current-price {
+    margin-top: 0px;
+    font-weight: 900;
+  }
+  
+  .chart-container {
+    width: 100%;
+    max-width: 80vw;
+    height: 30vw;
+    margin: 0px auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media screen and (max-width: 768px) {
+    .chart-container {
+      max-width: 100%; /* Allow chart to resize on smaller screens */
+      padding: 5px;
+    }
+  }
+  
