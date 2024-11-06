@@ -58,8 +58,6 @@ const CryptoDetails = () => {
         </Select>
       </div>
 
-      <div className='separator'></div>
-
       <LineChart
         coinHistory={coinHistory}
         currentPrice={millify(cryptoDetails.price)}

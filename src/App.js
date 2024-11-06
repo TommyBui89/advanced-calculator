@@ -73,7 +73,15 @@ const Header = ({ toggleMenu, isMenuVisible }) => {
         '/timezone': 'Time Zone Converter',
         '/unit': 'Unit Converter',
         '/grade': 'Grade Calculator',
-        '/crypto': 'Crypto Prices'
+        '/crypto': 'Crypto Tracker',
+        '/crypto/cryptocurrencies': 'Crypto Currencies',
+    };
+
+    const getHeaderTitle = () => {
+        if (location.pathname.startsWith('/crypto/')) {
+            return 'Crypto Tracker';
+        }
+        return routeNameMap[location.pathname] || 'Dashboard';
     };
 
     return (
@@ -81,9 +89,10 @@ const Header = ({ toggleMenu, isMenuVisible }) => {
             <button className="menu-toggle" onClick={toggleMenu}>
                 <FontAwesomeIcon icon={isMenuVisible ? faTimes : faBars} />
             </button>
-            <h1>{routeNameMap[location.pathname] || 'Dashboard'}</h1>
+            <h1>{getHeaderTitle()}</h1>
         </header>
     );
 };
+
 
 export default App;

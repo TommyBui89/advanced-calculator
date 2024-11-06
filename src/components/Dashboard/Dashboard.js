@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalculator, faExchangeAlt, faThermometerHalf, faDollarSign, faClock, faRuler, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
+import { faBitcoin } from '@fortawesome/free-brands-svg-icons';
 import './Dashboard.css';
 
 const calculators = [
@@ -12,6 +13,7 @@ const calculators = [
     { path: '/timezone', icon: faClock, name: 'Time Zone Converter' },
     { path: '/unit', icon: faRuler, name: 'Unit Converter' },
     { path: '/grade', icon: faGraduationCap, name: 'Grade Calculator' },
+    { path: '/crypto', icon: faBitcoin, name: 'Crypto Dashboard' },
 ];
 
 const Dashboard = () => {

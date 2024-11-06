@@ -1,15 +1,29 @@
+/* General Styles */
+.coin-detail-container {
+  margin: 0 auto;
+  padding: 10px;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Header container */
 .coin-header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 0px 20px;
+  gap: 15px;
+  padding: 10px;
 }
 
 .coin-header {
   display: flex;
   align-items: center;
   gap: 15px;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .coin-image {
@@ -21,45 +35,35 @@
 
 .coin-name {
   font-weight: bold;
-  color: white;
+  color: #0071bd;
   word-wrap: break-word;
-}
-
-.separator {
-  width: 100%;
-  height: 2px;
-  background-color: #ddd;
-  margin: 20px 0;
-  margin-top: 0px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .select-timeperiod {
-  margin: 10px 0;
-  min-width: 150px;
+  width: 100%;
+  max-width: 200px;
+  box-sizing: border-box;
 }
 
+/* Stats and description row */
 .stats-description-row {
   display: flex;
-  gap: 30px;
-  align-items: stretch;
   flex-wrap: wrap;
-  margin: 20px
+  gap: 20px;
+  width: 100%;
+  margin: 20px 0;
 }
 
 .description-column, .stats-column {
-  flex: 1;
+  flex: 1 1 100%;
   background-color: #f9f9f9;
   border-radius: 10px;
-  padding: 20px;
+  padding: 15px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-width: 300px;
-}
-
-.description-column {
-  justify-content: flex-start;
+  box-sizing: border-box;
 }
 
 .coin-stat {
@@ -84,16 +88,57 @@
 
 .chart-container {
   width: 100%;
-  max-width: 80vw;
-  height: 30vw;
   margin: auto;
   padding: 10px;
   background-color: #fff;
   border-radius: 10px;
+  box-sizing: border-box;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-@media screen and (max-width: 768px) {
+/* Media Queries */
+
+/* Large screens (desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+  .coin-detail-container {
+    padding: 20px;
+  }
+}
+
+/* Medium screens (tablets in landscape mode, 992px to 1199px) */
+@media screen and (max-width: 1199px) {
+  .coin-header-container {
+    padding: 15px;
+  }
+
+  .description-column, .stats-column {
+    padding: 20px;
+  }
+}
+
+/* Small screens (tablets in portrait mode, 768px to 991px) */
+@media screen and (max-width: 991px) {
+  .coin-header-container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .stats-description-row {
+    flex-direction: row;
+  }
+
+  .description-column, .stats-column {
+    flex: 1 1 48%; /* Allow two columns side by side */
+    margin-bottom: 10px;
+  }
+
+  .select-timeperiod {
+    max-width: 150px;
+  }
+}
+
+/* Extra small screens (large phones, 576px to 767px) */
+@media screen and (max-width: 767px) {
   .coin-header-container {
     flex-direction: column;
     align-items: flex-start;
@@ -105,10 +150,34 @@
 
   .description-column, .stats-column {
     min-width: 100%;
+    max-width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .select-timeperiod {
+    width: 100%;
   }
 
   .chart-container {
-    height: 50vw;
+    padding: 8px;
+  }
+}
+
+/* Very small screens (small phones, below 576px) */
+@media screen and (max-width: 575px) {
+  .coin-header-container {
     padding: 5px;
+  }
+
+  .description-column, .stats-column {
+    padding: 10px;
+  }
+
+  .coin-stat-name {
+    font-size: 0.9rem;
+  }
+
+  .stat-value {
+    font-size: 0.9rem;
   }
 }

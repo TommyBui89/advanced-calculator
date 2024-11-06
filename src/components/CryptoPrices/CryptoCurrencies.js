@@ -11,8 +11,8 @@ const CryptoCurrencies = ({ simplified }) => {
   const [cryptos, setCryptos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current route
-
+  const location = useLocation();
+  
   // Filter the data when search term changes
   useEffect(() => {
     if (cryptosList?.data?.coins) {
@@ -67,7 +67,6 @@ const CryptoCurrencies = ({ simplified }) => {
           <p>No cryptocurrencies found. Please try a different search term.</p>
         )}
       </Row>
-      {/* Hide "Show More" button if already on /crypto/cryptocurrencies route */}
       {!simplified && location.pathname !== '/crypto/cryptocurrencies' && (
         <div className="show-more-container">
           <button
